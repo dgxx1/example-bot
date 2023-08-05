@@ -30,6 +30,27 @@ try {
      * Check `hook.php` for configuration code to be added here.
      */
 
+    // Enable admin users
+    $telegram->enableAdmins($config['admins']);
+
+    // Add commands paths containing your custom commands
+    $telegram->addCommandsPaths($config['commands']['paths']);
+
+    // Enable MySQL if required
+    $telegram->enableMySql($config['mysql']);
+
+        // Set custom Download and Upload paths
+    $telegram->setDownloadPath($config['paths']['download']);
+    $telegram->setUploadPath($config['paths']['upload']);
+
+    // Load all command-specific configurations
+    foreach ($config['commands']['configs'] as $command_name => $command_config) {
+        $telegram->setCommandConfig($command_name, $command_config);
+    }
+
+
+    $telegram->enableLimiter($config['limiter']);
+
     // Handle telegram getUpdates request
     $server_response = $telegram->handleGetUpdates();
 
